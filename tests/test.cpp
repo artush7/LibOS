@@ -5,6 +5,7 @@ TEST(File, create)
 {
     File f("file1.txt");
     EXPECT_TRUE(f.exists());
+
 }
 
 TEST(File,create_false )
@@ -18,7 +19,7 @@ TEST(File,create_throw)
     EXPECT_THROW({File f("/faddfad/dafa/fds");},std::runtime_error);
 }
 
-TEST(File,create_excusive)
+TEST(File,create_exclusive)
 {
     File f("file1.txt");
     EXPECT_THROW({File f1("file1.txt");},std::runtime_error);

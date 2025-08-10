@@ -9,8 +9,16 @@ File::File(const std::string filename) : filename_(filename)
     }
 }
 
+File::File() {}
+
 bool File::exists() const
 {
     struct stat buffer;
     return(stat(filename_.c_str(),&buffer) == 0);
+}
+
+
+File::~File()
+{
+    unlink(filename_.c_str());
 }

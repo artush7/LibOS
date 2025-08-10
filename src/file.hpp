@@ -1,6 +1,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
 #include <string>
 
 
@@ -10,7 +12,9 @@ private:
     std::string filename_;
 public:
     File(const std::string filename);
-    File() {}
+    File();
+    ~File();
+
     bool exists() const;
 
 };
