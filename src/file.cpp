@@ -3,13 +3,18 @@
 
 File::File(const std::string filename) : filename_(filename)
 {
-    if (open(filename_.c_str(),O_CREAT | O_EXCL,0664) == -1)
+    fd_ = open(filename_.c_str(),O_CREAT | O_EXCL,0664);
+    if (fd_ == -1)
     {
-        throw std::runtime_error("failed to create file");
+        perror("failed to create file");
+        throw std::runtime_error("");
     }
 }
 
-File::File() {}
+File::File() 
+{
+    fd_ = -1;
+}
 
 bool File::exists() const
 {
@@ -20,5 +25,5 @@ bool File::exists() const
 
 File::~File()
 {
-    unlink(filename_.c_str());
+    close(fd_);
 }

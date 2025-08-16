@@ -3,8 +3,9 @@
 
 TEST(File, create)
 {
-    File f("file1.txt");
+    File f("file.txt");
     EXPECT_TRUE(f.exists());
+    unlink("file.txt");
 
 }
 
@@ -21,7 +22,8 @@ TEST(File,create_throw)
 
 TEST(File,create_exclusive)
 {
-    File f("file1.txt");
-    EXPECT_THROW({File f1("file1.txt");},std::runtime_error);
+    File f("file.txt");
+    EXPECT_THROW({File f1("file.txt");},std::runtime_error);
+    unlink("file.txt");
 }
 

@@ -10,6 +10,7 @@ class File
 {
 private:
     std::string filename_;
+    int fd_;
 public:
     File(const std::string filename);
     File();
