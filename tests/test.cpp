@@ -27,3 +27,42 @@ TEST(File,create_exclusive)
     unlink("file.txt");
 }
 
+TEST(File,open_passed)
+{
+    File f("file.txt");
+    EXPECT_NO_THROW(f.open("file.txt"));
+    unlink("file.txt");
+}
+
+TEST(File,open_failed)
+{
+    File f("file.txt");
+    EXPECT_THROW({f.open("file1.txt");},std::runtime_error);
+    unlink("file.txt");
+}
+
+TEST(File,remove_passed)
+{
+    File f("file.txt");
+    EXPECT_NO_THROW(f.remove("file.txt"));
+    unlink("file.txt");
+}
+
+
+TEST(File,remove_failed)
+{
+    File f("file.txt");
+    EXPECT_THROW({f.remove("file1.txt");},std::runtime_error);
+    unlink("file.txt");
+}
+
+TEST(File,write_read)
+{
+    File f("file.txt");
+    std::string msg = "something";
+    f.write("file.txt",msg);
+    std::cout << msg << std::endl;
+    std::string result = f.read("file.txt");
+    EXPECT_EQ(result,msg);
+    unlink("file.txt");
+}

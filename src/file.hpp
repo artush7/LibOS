@@ -4,7 +4,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <string>
-
+#include <vector>
+#include <iostream>
 
 class File
 {
@@ -15,6 +16,11 @@ public:
     File(const std::string filename);
     File();
     ~File();
+
+    void open(const std::string filename);
+    void remove(const std::string filename);
+    void write(const std::string filename,const std::string msg);
+    std::string read(const std::string filename);
 
     bool exists() const;
 
