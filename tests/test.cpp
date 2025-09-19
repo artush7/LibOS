@@ -56,13 +56,22 @@ TEST(File,remove_failed)
     unlink("file.txt");
 }
 
+TEST(File,rename_passed)
+{
+    File f("file.txt");
+    EXPECT_NO_THROW(f.rename("file.txt","file_1.txt"));
+    EXPECT_TRUE(f.exists());
+    unlink("file_1.txt");
+}
+
+
 TEST(File,write_read)
 {
     File f("file.txt");
     std::string msg = "something";
-    f.write("file.txt",msg);
+    f.write(msg);
     std::cout << msg << std::endl;
-    std::string result = f.read("file.txt");
+    std::string result = f.read();
     EXPECT_EQ(result,msg);
     unlink("file.txt");
 }

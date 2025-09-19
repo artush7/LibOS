@@ -19,8 +19,9 @@ public:
 
     void open(const std::string filename);
     void remove(const std::string filename);
-    void write(const std::string filename,const std::string msg);
-    std::string read(const std::string filename);
+    void write(const std::string msg);
+    std::string read();
+    void rename(const std::string filename,const std::string new_filename);
 
     bool exists() const;
 

@@ -55,9 +55,8 @@ void File::remove(const std::string filename)
 
 }
 
-void File::write(const std::string filename,const std::string msg)
+void File::write(const std::string msg)
 {
-    filename_ = filename;
     if (fd_ == -1)
     {
         perror("file does not exist");
@@ -76,9 +75,8 @@ void File::write(const std::string filename,const std::string msg)
 
 }
 
-std::string File::read(const std::string filename)
+std::string File::read()
 {
-    filename_ = filename;
     struct stat buffer_str;
     int stat_result = stat(filename_.c_str(),&buffer_str);
     if (stat_result == -1)
@@ -87,7 +85,8 @@ std::string File::read(const std::string filename)
         throw std::runtime_error("");
     }
     else
-    {
+    {   
+        ::lseek(fd_, 0, SEEK_SET);
         std::vector<char> buffer(buffer_str.st_size);
         auto read_res = ::read(fd_,buffer.data(),buffer.size());
         if (read_res == -1)
@@ -102,6 +101,25 @@ std::string File::read(const std::string filename)
 
     }
     
+}
+void File::rename(const std::string filename,const std::string new_filename)
+{
+    filename_ = filename;
+    if (fd_ == -1)
+    {
+        perror("file does not exist");
+        throw std::runtime_error("");
+    }
+    else
+    {
+        auto rename_result = ::rename(filename_.c_str(),new_filename.c_str());
+        if ( rename_result == -1)
+        {
+            perror("failed to rename file");
+            throw std::runtime_error("");
+        }
+        filename_ = new_filename;
+    }
 }
 
 File::File() 
